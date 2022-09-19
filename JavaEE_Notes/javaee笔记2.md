@@ -19,3 +19,11 @@ BigInteger转换为long类型时使用longValueExact()可在超出long范围时�
 自定义Exception建议从RunTimeException继承开始，避免强制try catch的麻烦。
 
 用空字符串""替代null可以避免NullPointerException。
+
+Spring核心概念：使用对象时，在程序中不要主动使用new产生对象，转换为由外部提供对象
+
+Spring 的 bean 机制个人认为就是反射的一种封装。
+
+默认状态下String创建的对象为单例对象，singleton默认为单例，prototype为非单例。
+
+Spring初始化方法会在类中属性设置之后执行
