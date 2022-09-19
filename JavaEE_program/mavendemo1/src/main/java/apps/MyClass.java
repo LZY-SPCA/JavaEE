@@ -2,12 +2,17 @@ package apps;
 
 import Annotations.InitMethod;
 
-public class MyClass {
+public class MyClass  {
+
 
     @InitMethod
-    public void init(){
+    public void init(int y) throws IllegalArgumentException{
+        if(y<0){
+            throw new IllegalArgumentException();
+        }
+        System.out.println(y);
         System.out.println("Init");
     }
 
-    public int i=0;
+
 }

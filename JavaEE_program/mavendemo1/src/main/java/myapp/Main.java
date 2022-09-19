@@ -13,46 +13,57 @@ import java.lang.reflect.Method;
 
 
 public class Main {
-    public static void main(String[] args) throws ClassNotFoundException {
+    //public String properties = "/myapp.properties";
+    Class annotation = InitMethod.class;
+    int xx=1;
+    public void Main(String properties,String className) throws IOException,ClassNotFoundException,NoSuchMethodException,IllegalArgumentException {
+
         Properties props = new Properties();
 
 
         try (InputStream input =
-                     Main.class.getResourceAsStream("/myapp.properties")) {
+                     Main.class.getResourceAsStream(properties)) {
             if (input == null) {
-                return;
+                throw new IOException();
             }
             props.load(input);
-            System.out.println(props.getProperty("bootstrapClass"));
-            Class myAppClass = Class.forName("apps."+props.getProperty("bootstrapClass"));
+
+            Class myAppClass = Class.forName("apps."+props.getProperty(className));
+
             Method[] methods = myAppClass.getMethods();
             Object User = myAppClass.getDeclaredConstructor().newInstance();
-
+            boolean flag = false;
             for(Method method:methods){
-                if(method.isAnnotationPresent(InitMethod.class)){
+                if(method.isAnnotationPresent(annotation)){
                     System.out.println(method.getName());
-                    method.invoke(User);
+                    method.invoke(User,xx);
+                    flag = true;
                 }
+            }
+            if(flag == false){
+                throw new NoSuchMethodException();
             }
 
 
 
 
-        } catch (IOException e) {
-            System.out.println("Load properties error!");
-        }  catch (ClassNotFoundException e) {
-            System.out.println("Load Class error!");
-        } catch (InvocationTargetException e) {
-            System.out.println("InvocationTargetException");
-        } catch (IllegalAccessException e) {
+        }
+        catch (IllegalAccessException e) {
             System.out.println("IllegalAccessException");
         } catch (InstantiationException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
+            System.out.println("123");
+        } catch (InvocationTargetException e) {
+            System.out.println("456");
         }
 
 
+    }
+    public void setAnnotation(Class inputAnnotation){
+        annotation = inputAnnotation;
+    }
+
+    public void setXx(int inputxx){
+        xx = inputxx;
     }
 
 }
