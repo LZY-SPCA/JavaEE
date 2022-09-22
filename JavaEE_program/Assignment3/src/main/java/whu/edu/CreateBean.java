@@ -9,6 +9,7 @@ public class CreateBean {
     }
 
     public void create() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        System.out.println("create");
         Class myBean = Class.forName(beanDefinition.className);
         Object bean = myBean.getConstructor().newInstance();
         MyApplicationContext.insert(beanDefinition,bean);

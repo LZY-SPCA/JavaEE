@@ -24,6 +24,8 @@ public class XMLReader {
             if(propertyElements.isEmpty()==true){
                 BeanDefinition beanDefinition = new BeanDefinition(element2.attributeValue("id"),element2.attributeValue("class"),false);
                 CreateBean createBean = new CreateBean(beanDefinition);
+                createBean.create();
+
 
                 System.out.println(beanDefinition);
             }
@@ -32,7 +34,10 @@ public class XMLReader {
                 for(Element prop:propertyElements){
                     beanDefinition.setProperty(prop.attributeValue("name"),prop.attributeValue("ref"));
                 }
+                System.out.println(beanDefinition.property.size());
                 CreateBean createBean = new CreateBean(beanDefinition);
+                createBean.create();
+                DependencyInjection.injection(beanDefinition);
                 System.out.println(beanDefinition);
             }
 

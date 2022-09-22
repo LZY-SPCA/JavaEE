@@ -9,5 +9,6 @@ public class BookDaoService {
 
     public void setBookDao(BookDao bookDao) {
         this.bookDao = bookDao;
+        System.out.println("123");
     }
 }
