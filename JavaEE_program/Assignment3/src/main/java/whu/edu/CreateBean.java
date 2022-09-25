@@ -8,10 +8,24 @@ public class CreateBean {
         this.beanDefinition=beanDefinition;
     }
 
-    public void create() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public void create() throws  IOCExcptions {
         System.out.println("create");
-        Class myBean = Class.forName(beanDefinition.className);
-        Object bean = myBean.getConstructor().newInstance();
+        Class myBean;
+        Object bean;
+        try{
+            myBean = Class.forName(beanDefinition.className);
+            bean = myBean.getConstructor().newInstance();
+        } catch (ClassNotFoundException | InstantiationException e) {
+            throw new IOCExcptions(IOCExcptions.ErrorType.CLASS_NOT_FOUND,"Class not found");
+        } catch (NoSuchMethodException e) {
+            throw new IOCExcptions(IOCExcptions.ErrorType.METHOD_CALL_ERROR,"No Such Method");
+        } catch (InvocationTargetException e) {
+            throw new IOCExcptions(IOCExcptions.ErrorType.INVOCATION_ERROR,"Invocation error");
+        } catch (IllegalAccessException e) {
+            throw new IOCExcptions(IOCExcptions.ErrorType.ILLEGAL_ACCESS,"Can't access");
+        }
+
+
         MyApplicationContext.insert(beanDefinition,bean);
 
     }

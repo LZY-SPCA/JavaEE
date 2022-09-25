@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2e8ea966-34d8-4c70-b8f4-9abb5c2e2281" name="变更" comment="" />
+    <list default="true" id="2e8ea966-34d8-4c70-b8f4-9abb5c2e2281" name="变更" comment="">
+      <change beforePath="$PROJECT_DIR$/../Assignment3/src/main/java/AppEntrance.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment3/src/main/java/AppEntrance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment3/src/main/java/whu/edu/CreateBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment3/src/main/java/whu/edu/CreateBean.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment3/src/main/java/whu/edu/DependencyInjection.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment3/src/main/java/whu/edu/DependencyInjection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment3/src/main/java/whu/edu/MyApplicationContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment3/src/main/java/whu/edu/MyApplicationContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Assignment3/src/main/java/whu/edu/XMLReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Assignment3/src/main/java/whu/edu/XMLReader.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,7 +42,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/学习/大三/javaee/assignment-2",
+    "last_opened_file_path": "D:/学习/大三/javaee作业/JavaEE/JavaEE_program/mavendemo1",
     "project.structure.last.edited": "库",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -117,6 +123,7 @@
       <workItem from="1663382916053" duration="4468000" />
       <workItem from="1663467818330" duration="5083000" />
       <workItem from="1663638482782" duration="153000" />
+      <workItem from="1664095469436" duration="824000" />
     </task>
     <servers />
   </component>

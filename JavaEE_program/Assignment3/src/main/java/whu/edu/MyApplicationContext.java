@@ -9,4 +9,8 @@ public class MyApplicationContext {
          System.out.println("insert");
          beans.put(beanDefinition.id,object);
      }
+
+     public static void delete(BeanDefinition beanDefinition){
+         beans.remove(beanDefinition);
+     }
 }

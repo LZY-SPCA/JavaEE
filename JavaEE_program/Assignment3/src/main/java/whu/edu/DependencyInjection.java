@@ -11,7 +11,7 @@ public class DependencyInjection {
     public DependencyInjection(BeanDefinition beanDefinition){
         this.beanDefinition=beanDefinition;
     }
-    public static void injection(BeanDefinition beanDefinition) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public static void injection(BeanDefinition beanDefinition) throws  IOCExcptions {
         Iterator<Map.Entry<String, String>> it = beanDefinition.property.entrySet().iterator();
         while(it.hasNext()){
             Map.Entry<String, String> entry = it.next();
@@ -35,14 +35,22 @@ public class DependencyInjection {
 
             if(targetClass==null){
                 System.out.println("null");
-                throw new IllegalArgumentException();
+                throw new IOCExcptions(IOCExcptions.ErrorType.CLASS_NOT_FOUND,"No such class");
             }
             Iterator<Map.Entry<String, Object>> beanClasses = MyApplicationContext.beans.entrySet().iterator();
             while(beanClasses.hasNext()){
                 Map.Entry<String, Object> beanClass = beanClasses.next();
                 if(beanDefinition.id==beanClass.getKey()){
-                    Method method = beanClass.getValue().getClass().getMethod(injectName, targetClass.getClass());
-                    method.invoke(beanClass.getValue(),targetClass);
+                    try {
+                        Method method = beanClass.getValue().getClass().getMethod(injectName, targetClass.getClass());
+                        method.invoke(beanClass.getValue(), targetClass);
+                    }catch (NoSuchMethodException e) {
+                        throw new IOCExcptions(IOCExcptions.ErrorType.METHOD_CALL_ERROR,"No such method");
+                    } catch (InvocationTargetException e) {
+                        throw new IOCExcptions(IOCExcptions.ErrorType.INVOCATION_ERROR,"Invocation error");
+                    } catch (IllegalAccessException e) {
+                        throw new IOCExcptions(IOCExcptions.ErrorType.ILLEGAL_ACCESS,"Can't access");
+                    }
                 }
             }
         }
