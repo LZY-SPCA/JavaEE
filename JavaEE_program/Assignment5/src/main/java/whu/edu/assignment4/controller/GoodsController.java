@@ -7,9 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import whu.edu.assignment4.entity.GoodsItem;
+import whu.edu.assignment4.entity.Supplier;
 import whu.edu.assignment4.service.GoodsService;
+import whu.edu.assignment4.service.SupplierService;
 
+import javax.transaction.Transactional;
+import java.io.Console;
 import java.util.List;
+import java.util.Optional;
 
 @Schema(description = "商品清单")
 @RestController
@@ -18,14 +23,17 @@ public class GoodsController {
     @Autowired
     GoodsService goodsService;
 
+    @Autowired
+    SupplierService supplierService;
+
     @ApiOperation("根据ID查询商品")
     @GetMapping("/{id}")
     public ResponseEntity<GoodsItem> getGoodsItem(@ApiParam("商品id")@PathVariable long id){
-        GoodsItem result = goodsService.getGoods(id);
-        if(result == null){
+        Optional<GoodsItem> result = goodsService.getGoods(id);
+        if(!result.isPresent()){
             return ResponseEntity.noContent().build();
         }else{
-            return ResponseEntity.ok(result);
+            return ResponseEntity.ok(result.get());
         }
     }
 
@@ -33,7 +41,7 @@ public class GoodsController {
     @GetMapping("")
     public ResponseEntity<List<GoodsItem>> findGoodsItem(@ApiParam("商品名称")String name,@ApiParam("供应商")String provider){
         List<GoodsItem> result = goodsService.findGoods(name, provider);
-        if(!result.isEmpty()){
+        if(result.size() > 0){
             return ResponseEntity.ok(result);
         }
         else{
@@ -44,15 +52,38 @@ public class GoodsController {
 
     @ApiOperation("添加商品")
     @PostMapping("")
-    public ResponseEntity<GoodsItem> addGoodsItem(@RequestBody GoodsItem goodsItem){
-        GoodsItem result = goodsService.addGoods(goodsItem);
-        return ResponseEntity.ok(result);
+    @Transactional(rollbackOn = Exception.class)
+    public ResponseEntity<GoodsItem> addGoodsItem(@RequestBody GoodsItem goodsItem) throws Exception {
+        GoodsItem result = null;
+        //try {
+        goodsItem.getSuppliers().forEach(supplier -> {
+            List<Supplier> suppliers = supplierService.findSuppliers(supplier.getName());
+            if(suppliers.isEmpty()){
+                Supplier supplier1 = supplierService.addSupplier(supplier);
+                supplier.setId(supplier1.getId());
+            }
+            else {
+                supplier.setId(suppliers.get(0).getId());
+            }
+        });
+            System.out.println(goodsItem.getId());
+            result = goodsService.addGoods(goodsItem);
+
+            return ResponseEntity.ok(result);
+//        } catch (Exception e) {
+//            System.out.println(e.getClass());
+//            throw new Exception("添加错误");
+//        }
+
+
     }
 
     @ApiOperation("修改商品")
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateGoodsItem(@PathVariable("id") long id,@RequestBody GoodsItem goodsItem){
-        try{goodsService.updateGoods(id,goodsItem);}
+        try{
+            goodsService.updateGoods(id,goodsItem);
+        }
         catch (NullPointerException e){
             return ResponseEntity.noContent().build();
         }
@@ -71,5 +102,7 @@ public class GoodsController {
         }
         return ResponseEntity.ok().build();
     }
+
+
 
 }
