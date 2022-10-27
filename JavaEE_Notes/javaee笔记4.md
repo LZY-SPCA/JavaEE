@@ -77,5 +77,3 @@ Swagger和新版本SpringBoot结合使用需添加注解@EnableWebMvc，否则�
 ```
 
 - EnableSwagger2在Swagger3中已弃用
-  
-  
