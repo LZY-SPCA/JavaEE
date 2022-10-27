@@ -82,6 +82,16 @@ public class GoodsController {
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateGoodsItem(@PathVariable("id") long id,@RequestBody GoodsItem goodsItem){
         try{
+            goodsItem.getSuppliers().forEach(supplier -> {
+                List<Supplier> suppliers = supplierService.findSuppliers(supplier.getName());
+                if(suppliers.isEmpty()){
+                    Supplier supplier1 = supplierService.addSupplier(supplier);
+                    supplier.setId(supplier1.getId());
+                }
+                else {
+                    supplier.setId(suppliers.get(0).getId());
+                }
+            });
             goodsService.updateGoods(id,goodsItem);
         }
         catch (NullPointerException e){
