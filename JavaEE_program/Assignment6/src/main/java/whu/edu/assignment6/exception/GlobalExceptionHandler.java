@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({ProductAdminException.class,DataAccessException.class, ValidationException.class })
+    @ExceptionHandler({ProductAdminException.class,DataAccessException.class, ValidationException.class,SupplierAdminException.class })
     public ResponseEntity<Object> handleExceptions(ProductAdminException exception, WebRequest webRequest) {
         ExceptionResponse response = new ExceptionResponse();
         response.setDateTime(LocalDateTime.now());

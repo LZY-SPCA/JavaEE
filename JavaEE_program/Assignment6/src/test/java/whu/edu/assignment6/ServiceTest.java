@@ -1,5 +1,6 @@
 package whu.edu.assignment6;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.test.annotation.Rollback;
 import whu.edu.assignment6.domain.Goods_item;
@@ -156,6 +157,22 @@ public class ServiceTest {
         //assertEquals(2, combinedService.f);
         assertEquals(9999.9,goodsItemService.findByName("手机").getPrice());
         assertEquals(2,combinedService.findByGoodsId(id).size());
+    }
+
+    @Test
+    public void testPageFind(){
+        //需要依赖已有数据
+        IPage result = goodsItemService.findPageByType();
+        System.out.println(result);
+        assertEquals(1,result.getPages());
+        assertEquals(4,result.getRecords().size());
+    }
+
+    @Test
+    public void testPriceBtw(){
+        //需要依赖已有数据
+        List<Goods_item> result = goodsItemService.findPriceBtw(4100.0,9000.0);
+        assertEquals(2,result.size());
     }
 
 }

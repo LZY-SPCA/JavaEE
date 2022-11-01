@@ -3,6 +3,7 @@ package whu.edu.assignment6.service.impl;
 import whu.edu.assignment6.domain.Supplier;
 import whu.edu.assignment6.dao.SupplierDao;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import whu.edu.assignment6.exception.SupplierAdminException;
 import whu.edu.assignment6.service.ISupplierService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.ibatis.annotations.SelectKey;
@@ -23,13 +24,13 @@ public class SupplierServiceImpl extends ServiceImpl<SupplierDao, Supplier> impl
 
 
     @SelectKey(statement = "select last_insert_id()",keyProperty = "id",keyColumn = "id",resultType = Long.class,before = true)
-    public Supplier addSupplier(Supplier supplier){
+    public Supplier addSupplier(Supplier supplier) throws SupplierAdminException{
         if(findSupplierByName(supplier.getName()).isEmpty()){
             getBaseMapper().insert(supplier);
             return supplier;
         }
         else{
-            return null;
+            throw new SupplierAdminException("供应商添加失败");
         }
     }
 
