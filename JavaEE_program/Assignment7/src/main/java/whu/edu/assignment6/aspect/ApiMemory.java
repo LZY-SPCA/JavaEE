@@ -15,6 +15,7 @@ public class ApiMemory {
     long averageTime;
     List<Long> times = Collections.synchronizedList(new ArrayList<>());
     public ApiMemory(){
+
         count =0;
         ExceptionCount=0;
     }
